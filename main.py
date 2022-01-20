@@ -1,4 +1,4 @@
-from functions.online_ops import search_on_wikipedia
+from functions.online_ops import search_on_wikipedia, search_entrez
 from datetime import datetime
 from decouple import config
 
@@ -22,7 +22,15 @@ if __name__ == "__main__":
     say_hello()
     while True:
         query = input("Enter name of the biological entity for which you need me to find info: \n")
+        if (query == "" or not isinstance(query, str)):
+            print("Thank you for using Biofetch!\n")
+            quit()
+
         print(f"Fetching information about {query}")
 
         wikipedia_results = search_on_wikipedia(query)
         print(f"Wikipedia says....\n {wikipedia_results}")
+
+        entrez_results = search_entrez(query)
+        for d,n in entrez_results.items():
+            print(d,n)
